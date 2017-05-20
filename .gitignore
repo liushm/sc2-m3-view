@@ -6,6 +6,10 @@ __pycache__/
 *.m3
 *.m3a
 
+*.s2ma
+*.sc2map
+*.sc2mod
+
 # C extensions
 *.so
 

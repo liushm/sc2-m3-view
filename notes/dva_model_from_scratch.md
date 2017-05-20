@@ -1,53 +1,52 @@
 
-0. ����׼���ôӷ籩Ӣ���ﵼ����ģ���ļ�������m3 m3a dds fxa fxe sounds
+0. 首先准备好从风暴英雄里导出的模型文件，包括m3 m3a dds fxa fxe sounds
 
-m3 ��ģ��
-m3a ��ģ�Ͷ���
-dds ��������ͼ
-fxa ���沿�����������Ҳ����˵��ʱ���첿����
-fxe ���沿����
-sounds ����һЩogg��waw�������ļ���ÿ����������һ����Ӧ��fxe
+m3 是模型
+m3a 是模型动画
+dds 是纹理贴图
+fxa 是面部控制器，大概也就是说话时的嘴部动作
+fxe 是面部动画
+sounds 包括一些ogg、waw的声音文件，每个声音都有一个对应的fxe
 
-Ȼ����sc2�༭���д�����λ��ģ�͡������壬Ȼ�����λ����3��Ĭ�ϵļ��ܣ��ƶ���������ֹͣ�����������پͿ���ʹ���ˣ��������µĲ���
-
-
-�����������Լ�һЩ���ҵıʼǣ�
+然后在sc2编辑器中创建单位、模型、演算体，然后给单位添加3个默认的技能（移动、攻击、停止），这样至少就可以使用了，再做余下的部分
 
 
-��λ���ԣ�
-          ����Flag+����ѡ�񣺿��Ա�F2ѡ��
-          �������ȼ�������˼��
-          ƽ�����У�PlaneArray�������Ƿ���Ա��Եء��Կյ�λ����
-          ��ײ�����棬����˼��
+遇到的问题以及一些凌乱的笔记：
 
-ģ�����ԣ�
-          ��������
-          �����ٶ�
-          ������λ
+a) 单位属性：
+标旗Flag+部队选择：可以被F2选中
+子组优先级，顾名思义
+平面阵列（PlaneArray）设置是否可以被对地、对空单位攻击
+碰撞：地面，顾名思义
 
-���������ԣ�
-          ��λͼ�ꡢӢ��ͼ�ꡢ�߿�ͼƬ
-          ���ܻ���ͼ��
-          ģ�͡�����ģ�͡���Ч
-          ��������С��λ�ã��Զ���״̬��
-          С��ͼ��ɫ���������Զ���ͼƬ
+b) 模型属性：
+比例因子
+动画速度
+纹理槽位
 
-1. ��������ͼ���������ã�  ��unit��actor������
+c) 演算体属性：
+单位图标、英雄图标、线框图片
+护盾护甲图标
+模型、死亡模型、音效
+生命条大小、位置，自定义状态条
+小地图颜色、比例、自定义图片
 
-2. dance������Ч������Щactor�йأ�  actorĬ�ϼ��ɣ���Ҫ�����޸ĵ�λ���ԣ���������ʱ�䣨Taunt duration��
+1. 生命护甲图标在哪设置？  在unit的actor里设置
+
+2. dance命令无效，与那些actor有关？  actor默认即可，需要额外修改单位属性：嘲讽持续时间（Taunt duration）
 <TauntDuration index ="Dance" value ="5"/>
 
-3. death֮��ɾ��ģ�͵�����  ������7
+3. death之后不删除模型的问题  见问题7
 
-4. ��ô��code�л�texture��  ʹ��Template��Slot�Լ�Ƥ����CSkin�������о���
+4. 怎么用code切换texture？  使用Template、Slot以及皮肤（CSkin），待研究～
 
-5. sc2����µ�Portraitģ�Ͷ��ֳ���background��addition��������ô�죿   ����ͷ�������壬���ڵ�λ������������ͷ���ͷ��������
+5. sc2里较新的Portrait模型都分成了background和addition两部分怎么办？   创建头像演算体，并在单位演算体里设置头像和头像演算体
 
-6. ��Ч�ļ�fxa fxe��ôʹ�ã�  ģ��������fxa����Ч������fxe��Ӧ��ÿ��ogg������һ���о���Ŀǰ���⣬��һ�ε��û���沿����������
+6. 音效文件fxa fxe怎么使用？  模型里设置fxa，音效里设置fxe对应于每个ogg，待进一步研究～目前问题，第一次点击没有面部动作，，，
 
-7. DeathRagdoll��ʲô��˼����Death�Ķ���ģ�͵����������Ϊ��ʲô��  DeathRagdollò����ʬ�岻��ʧ�����������ò����Ϊ�����ö������͵��������������ҿ��Ը�����ĺ�������Чͬ������ȷ�ϡ��籩Ӣ�۵�hero������ʬ����ʧ�е�����ģ�Ͷ���dissolve_deathragdoll��
+7. DeathRagdoll是什么意思，把Death的动画模型单独提出来是为了什么？  DeathRagdoll貌似是尸体不消失；单独提出来貌似是为了设置多种类型的死亡动画，并且可以更方便的和死亡音效同步，待确认～风暴英雄的hero死亡后，尸体消失有单独的模型动画dissolve_deathragdoll。
 
-8. ֵ��һ��Ķ�����sc2mapeditor��xml����������Ϣ�����е����Ͷ��Ǹ��ǻ��ƣ��������ƺ���Ҫ��ȡ�������֣����ԡ��Զ�����һЩ���ݹ���������
+8. 值得一提的东西，sc2mapeditor用xml保存所有信息，所有的类型都是覆盖机制，所以名称很重要，取对了名字，可以“自动”让一些数据关联起来～
 
-9. ����һ����TODO����������Ч�������ܡ�missile�ȵ�����
+9. 再下一步，TODO，设置武器效果、技能、missile等等内容
 

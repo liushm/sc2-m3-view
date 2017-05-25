@@ -10,12 +10,14 @@
 
 import hashlib
 import struct
+import array
 import os
 import sys
 from binascii import b2a_hex, a2b_hex
 
 nova = 'GhostFemaleNova.m3'
-#nova = 'NovaEx1.m3'
+nova = 'NovaEx1.m3'
+nova = 'Storm_Hero_DVA_Base.m3'
 #nova = 'GhostFemale_RequiredAnims.m3a'
 #nova = 'Marine.m3'
 
@@ -31,7 +33,7 @@ nm = head[2]
 
 typeset = set()
 m3items = []
-vertexes = []
+vertices = []
 triangles = []
 divisions = []
 
@@ -68,11 +70,14 @@ for i in m3items:
 
     for j in range(vxObj[2] / vxSize):
         (x, y, z) = struct.unpack_from('fff', data[vxObj[1]+j*vxSize:])
-        vertexes.append((x, y, z, ))
+        #vertices.append((x, y, z, ))
         #print x, y, z
+        vertices.append(x)
+        vertices.append(z)
+        vertices.append(y)
     print vxObj, 'vFlag: %x' % vFlag
 
-print 'total vertices count:', len(vertexes)
+print 'total vertices count:', len(vertices)
 
 # decode DIV_ field
 for div in m3items:
@@ -98,7 +103,8 @@ for div in m3items:
         for i in range(fLen):
             (id, ) = struct.unpack_from('h', data[fOff+i*2:])
             triangles.append(id)
-            #print vertexes[id]
+
+    print 'total triangles count:', len(triangles)
 
 # decode BAT_ field
 for i in m3items:
@@ -130,5 +136,5 @@ for i in m3items:
 
     for i in range(regLen):
         (_, _, firstVertexIndex, numberOfVertices, ff, nff, fob, fb, nobli, _, nobwppv, _, rbi, _, _, ) = struct.unpack_from('llllllhhhhbbhl8s', data[regOff+i*regSize:])
-        #print firstVertexIndex, numberOfVertices, ff, nff
+        print 'div[%d]:' % i, firstVertexIndex, numberOfVertices, ff, nff
         divisions.append((firstVertexIndex, numberOfVertices, ff, nff, ))

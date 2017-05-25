@@ -28,31 +28,14 @@ def DrawGLScene():
     glRotatef(30 * time.time() % 360.0, 0, 1.0, 0.0)
     glBegin(GL_TRIANGLES)
 
-    #for i in load_mesh.vertexes:
-    #    glVertex3f(i[0], i[2], i[1])
+    for div in load_mesh.divisions:
+        (vexBeg, vexLen, idxBeg, idxLen) = div
 
-    # for i in load_mesh.triangles:
-    #     v = load_mesh.vertexes[i]
-    #     glVertex3f(v[0], v[2], v[1])
+        triangles = load_mesh.triangles[idxBeg:idxBeg+idxLen]
 
-    for d in load_mesh.divisions:
-        x = load_mesh.triangles[d[2]:d[2]+d[3]]
-
-        for i in x:
-            v = load_mesh.vertexes[d[0]:d[0]+d[1]][i]
+        for i in triangles:
+            v = load_mesh.vertices[vexBeg:vexBeg+vexLen][i]
             glVertex3f(v[0], v[2], v[1])
-
-    # # mesh gun
-    # x = load_mesh.triangles[0:678]
-    # for i in x:
-    #     v = load_mesh.vertexes[i]
-    #     glVertex3f(v[0], v[2], v[1])
-
-    # # mesh nova
-    # x = load_mesh.triangles[678:5262]
-    # for i in x:
-    #     v = load_mesh.vertexes[i+319]
-    #     glVertex3f(v[0], v[2], v[1])
 
     glEnd()
     #glPopMatrix()
